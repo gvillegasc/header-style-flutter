@@ -172,3 +172,43 @@ class _HeaderCurvoPainter extends CustomPainter {
     return true;
   }
 }
+
+class HeaderWave extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      child: CustomPaint(
+        painter: _HeaderWavePainter(),
+      ),
+    );
+  }
+}
+
+class _HeaderWavePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = new Paint();
+    // Propiedades
+    paint.color = Color(0xff615AAB);
+    paint.style = PaintingStyle.fill;
+    paint.strokeWidth = 2;
+
+    final path = new Path();
+    // Dibujar con el path y el lapiz
+    path.lineTo(0, size.height * 0.3);
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.4,
+        size.width * 0.5, size.height * 0.3);
+    path.quadraticBezierTo(
+        size.width * 0.75, size.height * 0.2, size.width, size.height * 0.3);
+    path.lineTo(size.width, 0);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
