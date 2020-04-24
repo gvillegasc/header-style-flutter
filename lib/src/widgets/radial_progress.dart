@@ -4,38 +4,87 @@ import 'package:flutter/material.dart';
 
 class RadialProgress extends StatefulWidget {
   final porcentaje;
+  final Color colorPrimario;
+  final Color colorSecundario;
+  final double grosorPrimario;
+  final double grosorSecundario;
 
-  RadialProgress({this.porcentaje});
+  RadialProgress(
+      {@required this.porcentaje,
+      this.colorPrimario = Colors.blue,
+      this.colorSecundario = Colors.grey,
+      this.grosorPrimario = 10,
+      this.grosorSecundario = 4});
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
 }
 
-class _RadialProgressState extends State<RadialProgress> {
+class _RadialProgressState extends State<RadialProgress>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  double porcentajeAnterior;
+
+  @override
+  void initState() {
+    porcentajeAnterior = widget.porcentaje;
+    controller = new AnimationController(
+        vsync: this, duration: Duration(milliseconds: 200));
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      width: double.infinity,
-      height: double.infinity,
-      child: CustomPaint(
-        painter: _MiRadialProgress(widget.porcentaje),
-      ),
+    controller.forward(from: 0.0);
+
+    final diferenciaAnimar = widget.porcentaje - porcentajeAnterior;
+    porcentajeAnterior = widget.porcentaje;
+
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (BuildContext context, Widget child) {
+        return Container(
+          padding: EdgeInsets.all(10),
+          width: double.infinity,
+          height: double.infinity,
+          child: CustomPaint(
+            painter: _MiRadialProgress(
+                (widget.porcentaje - diferenciaAnimar) +
+                    (diferenciaAnimar * controller.value),
+                widget.colorPrimario,
+                widget.colorSecundario,
+                widget.grosorPrimario,
+                widget.grosorSecundario),
+          ),
+        );
+      },
     );
   }
 }
 
 class _MiRadialProgress extends CustomPainter {
   final porcentaje;
+  final Color colorPrimario;
+  final Color colorSecundario;
+  final double grosorPrimario;
+  final double grosorSecundario;
 
-  _MiRadialProgress(this.porcentaje);
+  _MiRadialProgress(this.porcentaje, this.colorPrimario, this.colorSecundario,
+      this.grosorPrimario, this.grosorSecundario);
 
   @override
   void paint(Canvas canvas, Size size) {
     // Circulo Completado
     final paint = new Paint()
-      ..strokeWidth = 4
-      ..color = Colors.grey
+      ..strokeWidth = grosorSecundario
+      ..color = colorSecundario
       ..style = PaintingStyle.stroke;
 
     final center = new Offset(size.width * 0.5, size.height / 2);
@@ -45,8 +94,8 @@ class _MiRadialProgress extends CustomPainter {
 
     // Arco
     final paintArco = new Paint()
-      ..strokeWidth = 10
-      ..color = Colors.pink
+      ..strokeWidth = grosorPrimario
+      ..color = colorPrimario
       ..style = PaintingStyle.stroke;
 
     // Parte que se debera ir llenando
