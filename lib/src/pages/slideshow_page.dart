@@ -6,7 +6,23 @@ class SlideshowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Slideshow(
+        body: Column(
+      children: <Widget>[
+        Expanded(child: MiSlideshow()),
+        Expanded(child: MiSlideshow())
+      ],
+    ));
+  }
+}
+
+class MiSlideshow extends StatelessWidget {
+  const MiSlideshow({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Slideshow(
       bulletPrimario: 15,
       bulletSecundario: 12,
       colorPrimario: Color(0xffFF5A7E),
@@ -17,6 +33,6 @@ class SlideshowPage extends StatelessWidget {
         SvgPicture.asset('assets/svgs/slide-4.svg'),
         SvgPicture.asset('assets/svgs/slide-5.svg')
       ],
-    ));
+    );
   }
 }
