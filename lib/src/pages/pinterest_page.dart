@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:header_style/src/widgets/pinterest_menu.dart';
 
 class PinterestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: PinterestGrid(),
-      ),
+          // child: PinterestGrid(),
+          child: PinterestMenu()),
     );
   }
 }
