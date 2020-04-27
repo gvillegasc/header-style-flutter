@@ -9,11 +9,13 @@ class PinterestPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => new _MenuModel(),
       child: Scaffold(
-          body: Stack(
-        children: <Widget>[
-          PinterestGrid(),
-          _PinterestMenuLocation(),
-        ],
+          body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            PinterestGrid(),
+            _PinterestMenuLocation(),
+          ],
+        ),
       )),
     );
   }
@@ -29,9 +31,31 @@ class _PinterestMenuLocation extends StatelessWidget {
       child: Container(
         width: widthPantalla,
         child: Align(
-          child: PinterestMenu(
-            mostrar: mostrar,
-          ),
+          child: PinterestMenu(mostrar: mostrar, items: [
+            PinterestButton(
+                icon: Icons.pie_chart,
+                // backgroundColor: Colors.red,
+                // activeColor: Colors.blue,
+                // inactiveColor: Colors.black,
+                onPressed: () {
+                  print('Icon pie_chart');
+                }),
+            PinterestButton(
+                icon: Icons.search,
+                onPressed: () {
+                  print('Icon search');
+                }),
+            PinterestButton(
+                icon: Icons.notifications,
+                onPressed: () {
+                  print('Icon notifications');
+                }),
+            PinterestButton(
+                icon: Icons.supervised_user_circle,
+                onPressed: () {
+                  print('Icon supervised_user_circle');
+                })
+          ]),
         ),
       ),
     );
@@ -51,7 +75,7 @@ class _PinterestGridState extends State<PinterestGrid> {
   @override
   void initState() {
     controller.addListener(() {
-      if (controller.offset > scrollAnterior) {
+      if (controller.offset > scrollAnterior && controller.offset > 150) {
         Provider.of<_MenuModel>(context, listen: false).mostrar = false;
       } else {
         Provider.of<_MenuModel>(context, listen: false).mostrar = true;
@@ -104,10 +128,29 @@ class _PinterestItem extends StatelessWidget {
 
 class _MenuModel with ChangeNotifier {
   bool _mostrar = true;
+  // Color _backgroundColor = Colors.white;
+  // Color _activeColor = Colors.black;
+  // Color _inactiveColor = Colors.blueGrey;
+
   bool get mostrar => this._mostrar;
 
   set mostrar(bool valor) {
     this._mostrar = valor;
     notifyListeners();
   }
+
+  // Color get backgroundColor => this._backgroundColor;
+  // set backgroundColor(Color color) {
+  //   this._backgroundColor = color;
+  // }
+
+  // Color get activeColor => this._activeColor;
+  // set activeColor(Color color) {
+  //   this._activeColor = color;
+  // }
+
+  // Color get inactiveColor => this._inactiveColor;
+  // set inactiveColor(Color color) {
+  //   this._inactiveColor = color;
+  // }
 }
