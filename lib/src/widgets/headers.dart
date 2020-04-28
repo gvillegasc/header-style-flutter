@@ -250,21 +250,21 @@ class IconHeader extends StatelessWidget {
         Column(
           children: <Widget>[
             SizedBox(
-              height: 80,
+              height: 60,
               width: double.infinity,
             ),
             Text(this.subtitulo,
-                style: TextStyle(fontSize: 20, color: colorBlanco)),
+                style: TextStyle(fontSize: 15, color: colorBlanco)),
             SizedBox(
-              height: 20,
+              height: 15,
             ),
             Text(this.titulo,
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 22,
                     color: colorBlanco,
                     fontWeight: FontWeight.bold)),
             SizedBox(
-              height: 20,
+              height: 15,
             ),
             FaIcon(
               this.icon,
@@ -288,7 +288,7 @@ class _IconHeaderBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 300,
+      height: 250,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
           gradient: LinearGradient(
